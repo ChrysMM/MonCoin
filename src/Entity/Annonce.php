@@ -48,6 +48,16 @@ class Annonce
      */
     private $author;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
+    
+
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -128,4 +138,19 @@ class Annonce
     {
         return $this->title;
     }
+
+    public function getCategory(): ?category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+   
+   
 }
