@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{annonce.title}}
+{% endblock %}
+
+{% block body %}
+	<div>
+		<h2>
+			{{annonce.title}}
+		</h2>
+        
+		<p>
+			{{annonce.content}}
+		</p>
+<h3> Mise en vente le: {{annonce.date | date('d/m/Y h:i')}} </h3>
+<h3> Prix {{annonce.price }} €</h3>
+ 
+		<a href="{{ path('mon_coin_update', {'id' : annonce.id } ) }}">
+			<button>Modifier mon Annonce</button>
+		</a>
+        <a href="{{ path('mon_coin_delete', {'id' : annonce.id } ) }}">
+			<button>Supprimer mon Annonce</button>
+		</a>
+
+
+</div>
+{% endblock %}

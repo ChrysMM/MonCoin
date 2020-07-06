@@ -1,0 +1,27 @@
+easy_admin:
+  site_name: "Mon Coin"
+  design:
+    menu:
+      - { label: 'Accueil', route: 'mon_coin', icon: 'home'}
+      - {entity: 'Annonce', icon: 'newspaper'}
+      - {entity: 'Author', icon: 'user'}
+  entities:
+    Annonce:
+      class: App\Entity\Annonce
+      form: 
+        fields:
+          - title
+          - { property: 'content', type: 'text_editor'}
+    Author:
+      class: App\Entity\Author
+      list:
+        fields:
+          - username
+          - annonces
+          - { property: 'picture', type: 'image', base_path: '/images/userPictures'}
+      form:
+        fields:
+          - username
+          - { property: 'roles', type: 'collection', permission: 'ROLE_SUPER_ADMIN'}
+          - annonces 
+          - { property: 'pictureFile', type: 'vich_image'}
