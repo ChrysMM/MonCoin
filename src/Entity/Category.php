@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,10 +25,14 @@ class Category
     private $label;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity=Annonce::class, mappedBy="Category")
      */
-    private $name;
+    private $Annonce;
 
+    public function __construct()
+    {
+        $this->Annonce = new ArrayCollection();
+    }
     public function __toString(){
         return $this->label;
     }
@@ -48,15 +54,41 @@ class Category
         return $this;
     }
 
-    public function getName(): ?string
+    /**
+     * @return Collection|Annonce[]
+     */
+    public function getAnnonce(): Collection
     {
-        return $this->name;
+        return $this->Annonce;
     }
 
-    public function setName(string $name): self
+    public function addAnnonce(Annonce $annonce): self
     {
-        $this->name = $name;
+        if (!$this->Annonce->contains($annonce)) {
+            $this->Annonce[] = $annonce;
+            $annonce->setCategory($this);
+        }
 
         return $this;
     }
+
+    public function removeAnnonce(Annonce $annonce): self
+    {
+        if ($this->Annonce->contains($annonce)) {
+            $this->Annonce->removeElement($annonce);
+            // set the owning side to null (unless already changed)
+            if ($annonce->getCategory() === $this) {
+                $annonce->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
+
+    
+
+   
+    
 }

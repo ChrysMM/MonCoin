@@ -5,6 +5,7 @@ easy_admin:
       - { label: 'Accueil', route: 'mon_coin', icon: 'home'}
       - {entity: 'Annonce', icon: 'newspaper'}
       - {entity: 'Author', icon: 'user'}
+      - {entity: 'Category', icon: 'archive'}
   entities:
     Annonce:
       class: App\Entity\Annonce
@@ -22,6 +23,14 @@ easy_admin:
       form:
         fields:
           - username
-          - { property: 'roles', type: 'collection', permission: 'ROLE_SUPER_ADMIN'}
+          - { property: 'roles', type: 'collection', permission: 'ROLE_ADMIN'}
           - annonces 
           - { property: 'pictureFile', type: 'vich_image'}
+    Category:
+      class: App\Entity\Category
+      list:
+        fields:
+          - label
+      form:
+        fields:
+          - label

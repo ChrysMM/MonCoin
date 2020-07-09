@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AnnonceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,18 +51,24 @@ class Annonce
     private $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="Annonce")
+     * @var Category
      */
     private $category;
 
     
-
     
 
-    public function getId(): ?int
+    public function __construct()
+    {
+        $this->category = new ArrayCollection();
+    }
+
+    
+     public function getId(): ?int
     {
         return $this->id;
+        
     }
 
     public function getTitle(): ?string
@@ -139,17 +147,21 @@ class Annonce
         return $this->title;
     }
 
-    public function getCategory(): ?category
+    public function getCategory()
     {
         return $this->category;
     }
 
-    public function setCategory(?category $category): self
+    public function setCategory($category): self
     {
         $this->category = $category;
 
         return $this;
     }
+
+  
+
+     
 
    
    

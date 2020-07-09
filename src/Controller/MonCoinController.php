@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Annonce;
- 
+use App\Entity\Category;
+use App\Repository\AnnonceRepository;
 use PhpParser\Node\Stmt\Label;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -40,20 +42,23 @@ class MonCoinController extends AbstractController
      * @Route("/add", name="mon_coin_add")
      */
     public function add(Request $request){
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');//le create
         $user = $this->getUser();
         $annonce = new Annonce();
-        $annonce->setdate(new \DateTime);
+        
         $annonce->setAuthor($user);
         $form = $this->createFormBuilder($annonce)
         ->add('title', TextType::class)
         ->add('content', TextareaType::class)
-        ->add('price', NumberType::class)
+        ->add('price', NumberType::class) //on peut utiliser MoneyType mais en centimes
         ->add('city', TextType::class)
+        ->add('category', EntityType::class, ['class'=> Category::class])
         ->add('submit', SubmitType::class, ['label'=>'Je vends!'])
         ->getForm();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            $annonce->setdate(new \DateTime);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($annonce);
             $entityManager->flush();
@@ -65,7 +70,7 @@ class MonCoinController extends AbstractController
      * @Route("/update/{id}", name="mon_coin_update")
      */
 public function update($id, Request $request){
-    $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+    $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');//l'update
 
     $annonce = $this->getDoctrine()->getRepository(Annonce::class)->find($id);
     $user = $this->getUser();
@@ -78,7 +83,9 @@ public function update($id, Request $request){
         ->add('content', TextareaType::class)
         ->add('price', NumberType::class)
         ->add('city', TextType::class)
+        ->add('category', EntityType::class, ['class'=> Category::class])
         ->add('submit', SubmitType::class, ['label'=>'Je vends!'])
+       
         ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
