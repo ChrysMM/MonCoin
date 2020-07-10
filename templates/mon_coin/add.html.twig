@@ -3,12 +3,21 @@
 {% block title %} Vendre {% endblock %}
 
 {% block body %}
-   {{ form_start(addForm) }}
+<section class="jumbotron text-center">
+<div class="container-fluid">
+ <h1 class="display-4">Vendre un article</h1>
+ <hr class="my-4">
+    <div class="row">
+      <div class="col" style="background-color:lavender">
+      {{ form_start(addForm) }}
         {{ form_row(addForm.title, {label: "Titre",  attr: {class: "form-black"}}) }}
         {{ form_row(addForm.content, {label: "Annonce"}) }}
         {{ form_row(addForm.title, {label: "Prix",  attr: {class: "form-black"}}) }}
         {{ form_row(addForm.title, {label: "Ville",  attr: {class: "form-black"}}) }}
         {{ form_row(addForm.category, {label: "Categorie", attr: {class: "form-black"}}) }}
-    {{ form_end(addForm) }}
+       {{ form_end(addForm) }}
+       </div>
+    </div>
+</div>
 
 {% endblock %}

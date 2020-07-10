@@ -58,6 +58,7 @@ class Annonce
 
     
     
+    
 
     public function __construct()
     {
@@ -158,6 +159,9 @@ class Annonce
 
         return $this;
     }
+
+    
+    
 
   
 

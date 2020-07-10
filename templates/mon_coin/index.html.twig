@@ -40,7 +40,7 @@
     {% for annonce in annonces %}
   
     
-      <div class="col" style="background-color:lavender;">
+      <div class="col" style="background-color:lavender">
           <a href="{{ path('mon_coin_annonce', {'id' : annonce.id }) }}">  
         <h2> {{annonce.title | upper}} </h2>
            </a>
@@ -54,17 +54,14 @@
             Anonyme    
         {% endif %}
         </h3>
-
-
-        <p class="lead text-muted">
-            {{annonce.content}}
-        </p>
-         {% if app.user and app.user == annonce.author %}
+        {% if app.user and app.user == annonce.author %}
         <a href="{{ path('mon_coin_update', {'id' : annonce.id } ) }}"><button>Modifier</button></a>
         <a href="{{ path('mon_coin_delete', {'id' : annonce.id } ) }}"><button>Supprimer</button></a>    
         {% endif %}
-</div>
-</div>
  
+
+</div>
+</div>
+</div>
     {% endfor %}
 {% endblock %}
